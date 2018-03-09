@@ -4,6 +4,7 @@ import requests
 from util import logger
 
 class DataTypeError(BaseException): pass
+class IntervalError(BaseException): pass
 
 class Avapi(object):
     def __init__(self,
@@ -90,5 +91,5 @@ class Avapi(object):
         return self.get('TIME_SERIES_MONTHLY_ADJUSTED', queries, headers)
 
     def batch(self, symbols, queries={}, headers={}):
-        queries.update({'symbols':','.join(symbols)})
-        return self.get('BATCH_STOCK_QUOTE', queries, headers)
+        queries.update({'symbols': symbols})
+        return self.get('BATCH_STOCK_QUOTES', queries, headers)

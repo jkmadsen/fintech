@@ -2,6 +2,7 @@
 
 import argparse
 import json
+import util
 
 from pprint import pprint
 
@@ -30,4 +31,9 @@ get_functions = {
 }
 
 if args.get is not None:
-    pprint(get_functions[args.get[0]](*args.get[1:]))
+    if args.get[0] != 'intraday':
+        pargs = [args.get[1]] + list(map(lambda x: util.parser.args_to_dict(x), args.get[2:]))
+        pprint(get_functions[args.get[0]](*pargs))
+    else:
+        pargs = args.get[1:3] + list(map(lambda x: util.parser.args_to_dict(x), args.get[3:]))
+        pprint(get_functions[args.get[0]](*pargs))
